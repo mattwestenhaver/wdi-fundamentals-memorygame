@@ -26,39 +26,34 @@ var cards = [
 var cardsInPlay = [];
 
 var checkForMatch = function () {
-	cardImage.setAttribute('src',cards[cardId].cardImage);
-	if (cardsInPlay.length === 2) {
-	if (cardsInPlay[0] === cardsInPlay[1]) {
-		alert("you found a match!");
-	} else {
-		alert("sorry, try again...");
-	}
-}
-}
+  if (cardsInPlay[0] === cardsInPlay[1]) {
+    alert("You found a match!");
+  } else {
+    alert("Sorry, try again.");
+  }
+};
+
 
 var flipCard = function () {
-	cardsInPlay.push(this.getAttribute('data-id'));
-	this.innerHTML = '<img src="' + this.getAttribute('data-id') + '.png">'
-	console.log("User flipped " + cards[cardId].rank);
-	console.log(cards[cardId].cardImage);
-	console.log(cards[cardId].suit);
-	cardsInPlay.push(cards[cardId].rank);
-	checkForMatch();
-}
+  cardId = this.getAttribute('data-id');
+  console.log(cardId);
+  cardsInPlay.push(cards[cardId].rank);
+  this.setAttribute('src', cards[cardId].cardImage);
+  if (cardsInPlay.length === 2) {
+    checkForMatch();
+    cardsInPlay = [];
+  }
+};
 
 var createBoard = function () {
 	for (var i = 0; i < cards.length; i++) {
 		var cardElement = document.createElement('img');
-		cardElement.className = 'card';
-		cardElement.setAttribute('src',"images/back.png");
-		cardElement.setAttribute('data-card', cards[i]);
+		cardElement.setAttribute('src','images/back.png');
+		cardElement.setAttribute('data-id', i);
 		cardElement.addEventListener('click', flipCard);
-		gameBoard.appendChild(cardElement);
+    	document.getElementById('game-board').appendChild(cardElement);
 	}
 }
 
 createBoard();
-
-
-
 
